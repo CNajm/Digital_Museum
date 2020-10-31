@@ -1,4 +1,5 @@
 import Home from '../views/Home.vue'
+import NotFound from '../views/404.vue'
 export default [
   {
     name: 'Home',
@@ -21,5 +22,9 @@ export default [
     name: 'Art',
     path: '/Art/:id',
     component: Home
+  },
+  {
+    path: '*',
+    component: NotFound
   }
 ]

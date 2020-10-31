@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import App from './App.vue'
-// import NotFound from './views/404.vue'
-// import wire from './views/wire.vue'
 import vuetify from './plugins/vuetify';
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import '@mdi/font/css/materialdesignicons.css'

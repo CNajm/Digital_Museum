@@ -1,28 +1,24 @@
 <template>
-  <div>
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="NOPERS NOT FOUND"/>
-  </div>
+	<div class="404">
+		<img alt="Vue logo" src="../assets/logo.png">
+		<h1>NOPERS NOT FOUND</h1>
+	</div>
 </template>
 
 <script>
-import HelloWorld from '../components/HelloWorld.vue'
-
 export default {
-  name: 'NotFound',
-  components: {
-    HelloWorld
-  }
+	name: 'NotFound',
+	components: {}
 }
 </script>
 
-<style>
+<!-- <style>
 div {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+	font-family: Avenir, Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-align: center;
+	color: #2c3e50;
+	margin-top: 60px;
 }
-</style>
+</style> -->
