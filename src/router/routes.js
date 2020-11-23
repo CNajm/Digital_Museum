@@ -1,30 +1,41 @@
-import Home from '../views/Home.vue'
-import NotFound from '../views/404.vue'
+import HomeView from '../views/Home.vue'
+import NotFoundView from '../views/404.vue'
+// import FlightsView from '../views/Flights.vue'
+import InfoView from '../views/About.vue'
+import RoomView from '../views/Room.vue'
+import ArtView from '../views/Art.vue'
 export default [
   {
     name: 'Home',
     path: '/',
-    component: Home
+    component: HomeView
   },
   {
-    name: 'About',
+    name: 'Info',
     path: '/about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: InfoView
   },
-  { name: 'Home23',
-    path: '/YAP',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  { 
+    path: '/room',
+    component: RoomView,
+    props: true
   },
-  {
-    name: 'Art',
-    path: '/Art/:id',
-    component: Home
+  { 
+    path: '/art',
+    component: ArtView,
+    props: true
   },
+  // {
+  //   name: 'Flights',
+  //   path: '/flights',
+  //   component: FlightsView,
+  //   meta: {
+  //     title: 'Flights',
+  //     requiresAuth: true,
+  //   }
+  // },
   {
     path: '*',
-    component: NotFound
+    component: NotFoundView
   }
 ]
