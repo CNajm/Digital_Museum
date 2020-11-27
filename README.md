@@ -2,7 +2,7 @@
 
 ## Group Project (done solo)
 -  **[Codebase Permalink](https://gitlab.com/cnajm/2210_digital_museum)** 
-- SQL DB file included
+- SQL DB setup file included. The backend looks for the DB in the root directory.
 
 This project aims to create a digital museum where online visitors will be able to find info on select works of art with prominent thematic elements or interesting stories.
 
