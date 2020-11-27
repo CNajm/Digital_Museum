@@ -13,7 +13,7 @@ This project uses the SEVN stack (SQL, Express, Vue, NodeJS) and is to be run of
 There is a frontend, which abstracts a lot of the DB logic and is easy on the eyes as well as a backend which serves the data and communicates with the DB engine.
 
 #### Backend
-The two share several dependencies. After the first install, the second should finish quickly due to the cached modules. The frontend is chunkier, it took around ~2 minutes to get it online on a 1 MB/s connection.
+The two share several dependencies. After the first install, the second should finish quickly due to the cached modules. The frontend is chunkier than the backend, it took around ~2 minutes to get it online on a 1 MB/s connection.
 ```
 cd backend/
 npm install
