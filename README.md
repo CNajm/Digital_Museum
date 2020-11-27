@@ -37,3 +37,8 @@ Run both simultaneously in two terminal instances then navigate to `localhost:80
 - Update (edit Art description)
 
 Queries can be found all over the place, most centralized usage of them is in the backend's `server.js` file.
+
+### Extra Features
+The fronend implements Vue+Vuetify. 
+
+Vuetify is a UI component library for Vue that uses the [material design](https://material.io/design) specifications, similar to Bootstrap.
