@@ -23,7 +23,6 @@
 <script>
 export default {
 	name: 'Room',
-	components: {},
 	props: {
 		title: String,
 		src: String,
@@ -35,19 +34,5 @@ export default {
 			id: `/room?id=${this.rid}&title=${this.title}`
 		}
 	},
-	mounted() {
-		
-	},
-	methods: {
-		a () {
-
-		},
-	}
 }
 </script>
-
-<style scoped>
-.text {
-	color: #FFFFFF;
-}
-</style>

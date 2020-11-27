@@ -35,7 +35,6 @@
 <script>
 export default {
 	name: 'Art',
-	components: {},
 	props: {
 		title: String,
 		src: String,
@@ -46,19 +45,5 @@ export default {
 			id: `/art?id=${this.aid}`
 		}
 	},
-	mounted() {
-		
-	},
-	methods: {
-		a () {
-
-		},
-	}
 }
 </script>
-
-<style scoped>
-/*.art {
-	background-size: contain;
-}*/
-</style>

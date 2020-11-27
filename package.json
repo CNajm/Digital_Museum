@@ -42,7 +42,7 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": { "semi" : ["warn", "never"]}
   },
   "browserslist": [
     "> 1%",

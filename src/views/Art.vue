@@ -1,7 +1,6 @@
 <template>
 	<div>
 		<img alt="logo" src="../assets/dlogo.png">
-
 		<v-container class="">
 			<v-row align="center">
 				<v-col cols="6">
@@ -75,12 +74,60 @@
 												:key="value.key"
 												color="blue"
 												small
+												class="mb-0"
 											>
 												<div>
 													<div class="pb-1">
 														<strong>{{ key }}</strong>
 													</div>
 													<div>{{ value }}</div>
+												</div>
+											</v-timeline-item>
+
+											<v-timeline-item
+												v-if="location.name"
+												color="brown lighten-2"
+												small
+											>
+												<div>
+													<div class="pb-1">
+														<strong>Located</strong>
+													</div>
+													<div>{{ location.name }}
+														<v-dialog
+															v-if="location.geo"
+															v-model="dialog"
+															max-width="700"
+														>
+															<template v-slot:activator="{ on }">
+																<v-btn
+																	v-on="on"
+																	icon
+																	class="ml-2 pb-1 "
+																	x-small
+																>
+																	<v-icon style="vertical-align: middle">mdi-open-in-new</v-icon>
+																</v-btn>
+															</template>
+															<v-card>
+																<v-card-title class="headline">
+																	{{ location.name }}
+																</v-card-title>
+																<iframe width="600" height="450" :src="location.geo" frameborder="0" style="border:0;filter: invert(00%)" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+																<!-- invert 90% for scuffed night mode, real night mode needs an API key -->
+																<v-card-actions>
+																	<v-spacer></v-spacer>
+																	<v-btn
+																		color="green darken-1"
+																		text
+																		@click="dialog = false"
+																	>
+																		Close
+																	</v-btn>
+																</v-card-actions>
+															</v-card>
+														</v-dialog>
+													</div>
 												</div>
 											</v-timeline-item>
 										</v-timeline>
@@ -91,7 +138,7 @@
 
 						<v-col cols="6" class="pt-0">
 							<v-card class="pb-2" outlined>
-								<v-list-item three-line>
+								<v-list-item>
 									<v-list-item-content>
 										<div class="overline mb-4 pb-0 text-left">
 											Artist Info
@@ -129,7 +176,7 @@
 												</v-timeline-item>
 
 												<v-timeline-item
-													color="green"
+													color="cyan"
 													small
 												>
 													<div>
@@ -152,33 +199,64 @@
 								<v-list-item-content>
 									<div class="overline mb-4 px-4 text-left">
 										Description
+										{{ editingDescription ? " - Editing (click again to save)" : ''}}
+										<v-btn
+											class="ma-1"
+											text
+											icon
+											:color="descriptionColor"
+											@click="editingDescription = !editingDescription; updateDescription()"
+										>
+											<v-icon>mdi-pencil</v-icon>
+										</v-btn>
 									</div>
-									<v-card-text class="body-1 text-left" v-html="details.description"></v-card-text>
+									<!-- <v-card-text class="body-1 text-left" v-html="details.description"></v-card-text> -->
+									<v-textarea										
+										auto-grow
+										:filled="editingDescription"
+										:readonly="!editingDescription"
+										class="px-4"
+										flat
+										id="textAreaDescription"
+										v-model="details.description"
+									></v-textarea>
 								</v-list-item-content>
 							</v-list-item>
 						</v-card>
 					</v-col>
+					<v-btn
+						class="ma-1"
+						text
+						icon
+						color="red lighten-2"
+						@click="deleteArt()"
+					>
+						<v-icon>mdi-delete</v-icon>
+					</v-btn>
 				</v-col>
-
 			</v-row>
 		</v-container>
-
 	</div>
 </template>
 
 <script>
-const fetch = require('node-fetch');
+const querystring = require('querystring')
+const fetch = require('node-fetch')
+
 export default {
 	name: 'Art',
 	components: { 
-		
 	},
 	data () {
 		return {
 			artID: this.$route.query.id ? this.$route.query.id : false,
 			details: null,
 			artType: {},
-			nodeCount: 2 // used to align the two timelines with .spacer . Default set to 2 because created and time_period always exist
+			nodeCount: 2, // used to align the two timelines with .spacer . Default set to 2 because created and time_period always exist,
+			location: {},
+			dialog: false,
+			descriptionColor: 'red lighten-2',
+			editingDescription: false,
 		}
 	},
 	mounted() {
@@ -186,10 +264,9 @@ export default {
 	},
 	methods: {
 		async loadArtDetails () {
-			console.log('art idasd', this.artID);
 			let res = await fetch(`http://localhost:8000/GetArtAndCreatorDetails?aid=${this.artID}`)
 			let art = await res.json()
-			console.log(art);
+			console.log(art)
 			this.details = art
 			switch (this.details.type) {
 				case 'Painting':
@@ -203,8 +280,35 @@ export default {
 					break
 			}
 			this.nodeCount += Object.keys(this.artType).length
-			console.log('nodecount', this.nodeCount);
+			console.log('nodecount', this.nodeCount)
+
+			if (this.details.located) {
+				let res = await fetch(`http://localhost:8000/GetMuseumDetails?mid=${this.details.located}`)
+				let museum = await res.json()
+				this.location.name = `${museum.name}`
+				if (museum.country)
+					this.location.name += `, ${museum.country}`
+				if (museum.geo)
+					// Coords by location name
+					this.location.geo = `https://maps.google.com/maps?q=${this.location.name}&t=&z=13&ie=UTF8&iwloc=&output=embed`
+					// Coords by geo coords
+					// let coords = museum.geo.split(',').map(g => g.trim())
+				this.nodeCount++
+			}
 		},
+		async updateDescription () {
+			if (this.editingDescription) 
+				this.descriptionColor = 'green lighten-2'
+			else
+				this.descriptionColor = 'red lighten-2'
+			console.log(this.details.description)
+			let query = querystring.stringify({aid: this.artID, desc: this.details.description})
+			await fetch(`http://localhost:8000/UpdateArtDetails?${query}`, {method: 'POST'})
+		},
+		async deleteArt () {
+			await fetch(`http://localhost:8000/DeleteArt?aid=${this.artID}`, {method: 'POST'})
+			this.$router.push({ name: 'Gallery' })
+		}
 	}
 }
 </script>
@@ -218,5 +322,8 @@ export default {
 }
 .spacer {
 	visibility: hidden;
+}
+#textAreaDescription .v-input--is-disabled textarea {
+	color: white !important;
 }
 </style>

@@ -19,8 +19,8 @@
 </template>
 
 <script>
-const querystring = require('querystring');
-const fetch = require('node-fetch');
+const querystring = require('querystring')
+const fetch = require('node-fetch')
 import Art from '@/components/ArtCard.vue'
 
 export default {
@@ -36,7 +36,7 @@ export default {
 		}
 	},
 	mounted () {
-		console.log('PARAMS',this.$route.query); 
+		console.log('PARAMS',this.$route.query) 
 		if (this.roomID)
 			this.loadRoomContent(this.roomID)
 	},
@@ -46,12 +46,11 @@ export default {
 			let res = await fetch(`http://localhost:8000/GetRoomContents?${query}`)
 			let art = await res.json()
 			for (const i of art) {
-				console.log('art', i);
+				console.log('art', i)
 				await this.arts.push({title: i.name, src: i.url, aid: i.AID, flex: 3})
 			}
-			console.log('ALL', this.arts);
+			console.log('ALL', this.arts)
 		}
-		// TODO render the art cards from the json
 	}
 }
 </script>

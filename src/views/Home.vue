@@ -1,7 +1,6 @@
 <template>
-	<div class="home">
-	<img alt="Vue logo" src="../assets/dlogo.png">
-	<h1 v-if="routeID">{{ routeID }}</h1>
+	<div>
+	<img alt="logo" src="../assets/dlogo.png">
 	<h1 class="">Featured Rooms</h1>
 
 	<v-container fluid>
@@ -19,7 +18,7 @@
 </template>
 
 <script>
-const querystring = require('querystring');
+const querystring = require('querystring')
 import Room from '@/components/RoomCard.vue'
 
 export default {
