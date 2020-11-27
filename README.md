@@ -33,7 +33,7 @@ Run both simultaneously in two terminal instances then navigate to `localhost:80
 - Join
 - Aggregation
 - Nested Aggregation
-- Delete
-- Update
+- Delete (on cascade functionality can be found on Creators page, delete a relevant inspiration row)
+- Update (edit Art description)
 
 Queries can be found all over the place, most centralized usage of them is in the backend's `server.js` file.
