@@ -7,12 +7,12 @@ var db = false
 
 function dbConnect() {
 	db = new sqlite3('../project.db', {fileMustExist: true, verbose: console.log })
-	console.log(db);
+	console.log(db)
 	if (!db) {		
-		console.log("unable to connect");
+		console.log("unable to connect")
 	}
 	else {
-		console.log('connected to the project database.');
+		console.log('connected to the project database.')
 	}
 }
 
@@ -75,7 +75,7 @@ function fetchGalleryArt() {
 }
 
 function updateArtDetails(artID, newDesc) {
-	console.log(artID, newDesc);
+	console.log(artID, newDesc)
 	let sql = db.prepare('UPDATE Art SET description=? WHERE AID=?')
 	const q = sql.run(newDesc, artID)
 	console.log(q)
@@ -103,7 +103,7 @@ function fetchQuerySelection(table, column, operator, condition) {
 	// Vunerable to injections but wasn't able to get dynamic table/column names working
 	if (!isNumeric(condition)) condition = `'${condition}'`
 	else condition = +condition
-	console.log(typeof condition);
+	console.log(typeof condition)
 	let sql = db.prepare(`SELECT name as artname, ${column} FROM ${table} WHERE ${column} ${operator} ${condition}`)
 	return sql.all()
 }
@@ -137,14 +137,14 @@ app.use((req, res, next) => {
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
 	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
 	next()
-});
+})
 
 
 function logTime(req, res, next) { // logs time and route details with colors
   let now = new Date()
-  let status = res.statusCode;
+  let status = res.statusCode
   status = status == 200 ? colors.green(status) : colors.brightRed(status)
-  console.log(`${colors.yellow(req.method)}:${colors.brightMagenta(req.url)} ${status}`);
+  console.log(`${colors.yellow(req.method)}:${colors.brightMagenta(req.url)} ${status}`)
   console.log('Time:'.brightRed, now.toUTCString().yellow)
   next()
 }
@@ -153,27 +153,27 @@ function logTime(req, res, next) { // logs time and route details with colors
 // Routes
 
 // default logger middleware
-app.get('/*', logTime);
+app.get('/*', logTime)
 
 app.get('/connect', (req, res) => {
 	let out
 	db = new sqlite3.Database('../project.db', sqlite3.OPEN_READWRITE, (err) => {
 	if (err) {
-		console.error(err.message);
+		console.error(err.message)
 		out = "NOPE"
 	}
 	else {
-		console.log('connected to the project database.');
+		console.log('connected to the project database.')
 		out = "YEP HELLO"
 	}
 	res.send(out)
-	});
+	})
 })
 
 app.get('/close', (req, res) => {
 	// close the database connection
-	console.log('YEP closing db');
-	db.close();
+	console.log('YEP closing db')
+	db.close()
 	res.send('CLOSED')
 })
 
@@ -293,21 +293,21 @@ app.get('/GetQueryNestedAggregation', (req, res) => {
 app.get('/art', (req, res) => {
 	let id = req.query.id
 	if (id) {
-		console.log('GET art:id', id);
+		console.log('GET art:id', id)
 	
 		let sql = db.prepare('SELECT * FROM Art WHERE aid=(?)', id)
 		sql.get((err, row) => {
 			if (err) {
-				throw err;
+				throw err
 			}
 			data = row ? row : '{"error": 404, "info": "ID not found"}'
 			res.send(data)
 			return
-		});
+		})
 	}
 	else 
 		res.send('{"error": 400, "info": "ID field missing"}')
 })
 
 dbConnect()
-app.listen(8000, () => console.log('server running on port 8000'));
+app.listen(8000, () => console.log('server running on port 8000'))
