@@ -26,3 +26,14 @@ npm install
 npm run serve
 ```
 Run both simultaneously in two terminal instances then navigate to `localhost:8080`
+
+### Query Categories Used
+- Projection
+- Selection
+- Join
+- Aggregation
+- Nested Aggregation
+- Delete
+- Update
+
+Queries can be found all over the place, most centralized usage of them is in the backend's `server.js` file.
