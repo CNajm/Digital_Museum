@@ -44,11 +44,13 @@ Run both simultaneously in two terminal instances then navigate to `localhost:80
 Queries can be found all over the place, most centralized usage of them is in the backend's `server.js` file.
 
 ## Extra Features
-The fronend implements Vue+Vuetify. 
-
-Vuetify is a UI component library for Vue that uses the [material design](https://material.io/design) specifications, similar to Bootstrap.
+- The frontend implements Vue+Vuetify. 
+Vuetify is a UI component library for Vue that leverages the [material design](https://material.io/design) spec, similar to Bootstrap.
+- Client-Server architecture + asynchronous design
+- Prepared statements prevent sql injections
+- google maps integration on Art page → Museum
 
 ## Disclaimer 
-All commits past the due date (27@00:00) (everything after 9d3791d0) are commits that update this README file to add more details about the project.
+All commits past the due date (27@00:00) (everything after 9d3791d0) are commits that update this README file to add more details about the project. You can ignore them and everything would run the same way.
 
 Commit d1ace345 adds cosmetic changes to the About page to make it look more aesthetically pleasing and to mirror some of the info found in this README. The code added is raw HTML and does not affect the project's functionality in any way. 
